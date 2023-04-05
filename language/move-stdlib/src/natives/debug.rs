@@ -40,30 +40,6 @@ fn native_print(
     let _val = args.pop_back().unwrap();
     let _ty = ty_args.pop().unwrap();
 
-    // No-op if the feature flag is not present.
-    #[cfg(feature = "testing")]
-    {
-        let canonical = false;
-        let single_line = false;
-        let include_int_types = false;
-
-        let mut out = "[debug] ".to_string();
-        let val = _val.value_as::<Reference>()?.read_ref()?;
-
-        testing::print_value(
-            _context,
-            &mut out,
-            val,
-            _ty,
-            &_move_std_addr,
-            0,
-            canonical,
-            single_line,
-            include_int_types,
-        )?;
-        println!("{}", out);
-    }
-
     Ok(NativeResult::ok(gas_params.base_cost, smallvec![]))
 }
 
